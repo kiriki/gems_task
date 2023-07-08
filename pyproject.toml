@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "gems-task"
+version = "0.0.1"
+description = ""
+authors = ["Kirill Che <kiriciri@gmail.com>"]
+readme = "README.md"
+packages = [{include = "gems_task"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
