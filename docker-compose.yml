@@ -1,0 +1,19 @@
+# local staging compose
+version: "3.8"
+name: "gems_staging"
+services:
+  api:
+    build: .
+    command: bash -c "python main.py"
+    env_file: ./config/.env
+    environment:
+      APP_API_PORT: 8000
+      APP_API_WORKERS_COUNT: 2
+      DJANGO_SETTINGS_MODULE: gems_task.settings
+    volumes:
+      - static_vol:/app/staticfiles
+      - ./dbdata:/app/dbdata
+    ports:
+      - "80:8000"
+volumes:
+  static_vol: {}

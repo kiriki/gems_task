@@ -1,0 +1,20 @@
+# local dev compose (db only)
+version: "3.8"
+name: "gems_dev"
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: db_gems_dev
+    env_file: ./config/.env
+    volumes:
+      - pg_data_vol:/var/lib/postgresql/data
+    ports:
+      - ${DJANGO_DATABASE_PORT:-5432}:5432
+    networks:
+      - net-dev
+volumes:
+  pg_data_vol: { }
+
+networks:
+  net-dev:
+    driver: bridge
