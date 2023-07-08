@@ -1,13 +1,7 @@
-from rest_framework.routers import DefaultRouter
-
-from django.urls import include, path
+from django.urls import path
 
 from gems import views
 
-router = DefaultRouter()
-
-router.register('customers', views.CustomersViewSet)
-
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', views.DealsStat.as_view(), name='deals'),
 ]
