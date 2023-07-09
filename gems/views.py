@@ -19,14 +19,18 @@ from gems.serializers import (
 
 
 class DealsStat(GenericAPIView):
+    """Common API view for dealing with deals history data."""
+
     queryset = selected_customers_queryset[:CUSTOMERS_LIMIT]
 
     def get(self, request: Request, *args, **kwargs) -> Response:
+        """Retrieve customers with the most spent money in their deals."""
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response({'response': serializer.data})
 
     def post(self, request: Request, *args, **kwargs) -> Response:
+        """Upload CSV file."""
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 

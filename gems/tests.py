@@ -9,7 +9,7 @@ from django.urls import reverse
 from gems.urls import DEALS_VIEW_NAME
 
 deals_path = reverse(DEALS_VIEW_NAME)
-cwd = Path.cwd()
+cwd = Path(__file__).parent
 
 CUSTOMERS_COUNT_EMPTY = 0
 CUSTOMERS_COUNT_FILLED = 5

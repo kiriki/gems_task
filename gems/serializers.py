@@ -28,7 +28,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         fields = 'username', 'spent_money', 'gems'
 
     def get_gems(self, obj: Customer) -> list[str]:
-        """ Список из названий камней, которые купили как минимум двое из списка
+        """Список из названий камней, которые купили как минимум двое из списка
         "5 клиентов, потративших наибольшую сумму за весь период",
         и данный клиент является одним из этих покупателей.
         """
@@ -46,7 +46,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class DealSerializerCreate(serializers.ModelSerializer):
-    """ Serializer for creating Deal objects from CSV file entries. """
+    """Serializer for creating Deal objects from CSV file entries."""
 
     customer = serializers.CharField()
     item = serializers.CharField()
@@ -66,7 +66,7 @@ class DealSerializerCreate(serializers.ModelSerializer):
 
 
 class DealsFileUploadSerializer(serializers.Serializer):
-    """ Serializer for upload CVS file with deals data. """
+    """Serializer for upload CVS file with deals data."""
 
     deals = serializers.FileField()
 
@@ -82,7 +82,7 @@ class DealsFileUploadSerializer(serializers.Serializer):
 
 
 def import_deals_from_csv_reader(reader: csv.DictReader) -> int:
-    """ Import deals data from csv file reader. """
+    """Import deals data from csv file reader."""
     # Очистка. Для реализации требования п. 2 задания:
     # "Ранее загруженные версии файла deals.csv не должны влиять на результат обработки новых."
     Deal.objects.all().delete()
