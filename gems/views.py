@@ -5,7 +5,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import BaseSerializer
 
+from django.core.cache import cache
+from django.utils.cache import get_cache_key
+
 from gems.serializers import (
+    CUSTOMERS_LIMIT,
     CustomerSerializer,
     DealsFileUploadSerializer,
     selected_customers_queryset,
@@ -13,7 +17,7 @@ from gems.serializers import (
 
 
 class DealsStat(GenericAPIView):
-    queryset = selected_customers_queryset
+    queryset = selected_customers_queryset[:CUSTOMERS_LIMIT]
 
     def get(self, request: Request, *args, **kwargs) -> Response:
         queryset = self.get_queryset()
@@ -39,6 +43,10 @@ class DealsStat(GenericAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         else:
+            # invalidate cache after upload
+            cache_key = get_cache_key(request)
+            cache.delete(cache_key)
+
             return Response(r, status=status.HTTP_200_OK)
 
     def get_serializer_class(self) -> type[BaseSerializer]:

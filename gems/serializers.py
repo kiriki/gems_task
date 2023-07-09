@@ -16,6 +16,8 @@ selected_customers_queryset = Customer.objects.annotate(
     spent_money=Sum('deal__total')
 ).order_by('-spent_money')
 
+CUSTOMERS_LIMIT = 5
+
 
 class CustomerSerializer(serializers.ModelSerializer):
     spent_money = serializers.IntegerField(read_only=True)
@@ -33,7 +35,9 @@ class CustomerSerializer(serializers.ModelSerializer):
         result_qs = GemItem.objects.annotate(
             num_customers=Count(
                 'deal__customer',
-                filter=Q(deal__customer__in=selected_customers_queryset[:5]),
+                filter=Q(
+                    deal__customer__in=selected_customers_queryset[:CUSTOMERS_LIMIT]
+                ),
                 distinct=True,
             )
         ).filter(num_customers__gte=2, deal__customer__exact=obj)
