@@ -1,3 +1,5 @@
+import csv
+
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
@@ -30,15 +32,11 @@ class DealsStat(GenericAPIView):
 
         try:
             r = serializer.save()
-
-        except ValidationError as e:
-            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
-
-        except Exception as e:
+        except (UnicodeDecodeError, csv.Error, ValidationError):
             return Response(
                 {
                     'Status': 'Error',
-                    'Descr': str(e),
+                    'Descr': 'Input file format error',
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )

@@ -140,6 +140,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.MultiPartParser',
     ],
+    'EXCEPTION_HANDLER': 'gems.utils.common_exception_handler',
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.AllowAny',
     #     'rest_framework.permissions.IsAuthenticated',
